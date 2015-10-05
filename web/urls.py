@@ -12,7 +12,7 @@ import urlparse
 @get('/index')
 def signin():
     print ctx.request.para
-    return dict()
+    return dict(message="origin message")
 
 @api
 @get('/api/users')

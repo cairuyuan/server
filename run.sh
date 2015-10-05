@@ -35,10 +35,12 @@ function helpinfo(){
     echo "举个栗子: ./run.sh start "
 
 }
+
+
 if [[ $# == 0 ]]; then
 	helpinfo
-elif   [[ $1 == "start" ]]; then
-	echo "start"
+elif   [[ $1 == "startA" ]]; then
+	echo "start python app and nginx"
 	killnginx
 	killpython
 	sudo nginx -c /Users/x/server/conf/nginx.conf  &
@@ -46,10 +48,27 @@ elif   [[ $1 == "start" ]]; then
     #/usr/local/bin/gunicorn --bind 127.0.0.1:9000 --workers 4 --worker-class gevent wsgiapp:application & 
 	python wsgiapp.py &
 		)
-elif [[ $1 == "stop" ]]; then
-	echo "stop"
+elif   [[ $1 == "startN" ]]; then
+	echo "start nginx"
+	sudo nginx -c /Users/x/server/conf/nginx.conf  &
+elif   [[ $1 == "startP" ]]; then
+	echo "start python app"
+	(cd ./web
+    #/usr/local/bin/gunicorn --bind 127.0.0.1:9000 --workers 4 --worker-class gevent wsgiapp:application & 
+	python wsgiapp.py &
+		)
+
+elif [[ $1 == "stopA" ]]; then
+	echo "stop python and ngix"
 	killnginx
 	killpython
+elif [[ $1 == "stopN" ]]; then
+	echo "stop nginx"
+	killnginx
+elif [[ $1 == "stopP" ]]; then
+	echo "stop python"
+	killpython
+
 elif [[ $1 == "reload" ]]; then
 	echo "reload"
 	sudo nginx -s reload -c /Users/x/server/conf/nginx.conf
@@ -58,4 +77,6 @@ elif [[ $1 == "test" ]]; then
 	sudo nginx -t -c /Users/x/server/conf/nginx.conf
 elif [[ $1 == "help" ]]; then
     helpinfo
+else 
+	echo "wrong para"
 fi

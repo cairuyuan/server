@@ -79,12 +79,15 @@ class WSGIApplication(object):
                 start_response(ctx.response.status, ctx.response.headers)#先发还头部
                 return r
             except RedirectError, e:
+                print e
                 start_response(e.status, ctx.response.headers)
                 return []
             except HttpError, e:
+                print e
                 start_response(e.status, ctx.response.headers)
                 return ['<html><body><h1>', e.status, '</h1></body></html>']
             except Exception, e:
+                print e
                 start_response('500 Internal Server Error', [])
                 return ['<html><body><h1>500 Internal Server Error</h1></body></html>']
             finally:
